@@ -1,0 +1,35 @@
+{
+  "name": "graphql-demeter",
+  "version": "1.0.0",
+  "private": false,
+  "scripts": {
+    "start": "tspc --build tsconfig.build.json --watch",
+    "build": "tspc --build tsconfig.build.json"
+  },
+  "author": "GraphQL Editor, Artur Czemiel",
+  "license": "MIT",
+  "description": "Most advanced mock server for GraphQL Schema",
+  "homepage": "https://graphqleditor.com",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "type": "module",
+  "bin": {
+    "demeter": "lib/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/graphql-editor/graphql-demeter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/graphql-editor/graphql-demeter.git"
+  },
+  "dependencies": {
+    "cross-fetch": "^3.0.4",
+    "graphql-demeter-core": "^1.0.0",
+    "graphql-yoga": "^5.1.1",
+    "yargs": "^16.1.1"
+  },
+  "devDependencies": {
+    "@types/yargs": "^17.0.32"
+  }
+}
