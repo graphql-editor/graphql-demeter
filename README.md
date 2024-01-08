@@ -17,48 +17,19 @@ Install the package via npm:
 ```
 npm install graphql-demeter
 ```
-a
-## Set-up with OpenAI
 
-If you want to generate AI-based mocks using OpenAI, follow these steps:
-
-1. Obtain an OpenAI API key.
-2. Set the API key in your project's configuration file.
-3. Use the provided functions to generate AI-based mocks.
-
-## Set faker.js mocks
-
-To set mocks using faker.js, follow these steps:
-
-1. Install the faker.js package:
+## Running
+Just run the CLI on your schema.
 
 ```
-npm install faker
+demeter schema.graphql
 ```
 
-2. Use the provided functions to generate faker.js based mocks.
 
-## Set AutoMock based on faker.js
+## Development & Examples
 
-To enable auto-mocking based on faker.js, follow these steps:
+1. Clone this repository
+2. Install dependencies
+3. Run npm run run-example
 
-1. Install the faker.js package:
-
-```
-npm install faker
-```
-
-2. Use the provided functions to enable auto-mocking using faker.js.
-
-## Set manual mock entries in config
-
-If you prefer to set manual mock entries in the configuration file, follow these steps:
-
-1. Open the configuration file.
-2. Add your desired mock entries.
-
-For more detailed information and examples, please refer to the [documentation](https://your-documentation-link.com).
-
-If you have any questions or need further assistance, feel free to join our Discord community [here](https://discord.gg/your-discord-link) or open an issue on our [GitHub repository](https://github.com/your-repo).
-
-We appreciate your interest in GraphQL Demeter and hope you find it useful for mocking GraphQL Server responses!
+You should have your server running on port 4000 with sample schema. Feel free to modify schema locally to just test it with your schema.
