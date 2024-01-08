@@ -1,4 +1,4 @@
-# GraphQL Demeter
+# GraphQL Demeter 🌾
 
 **Alpha mode warning** This is in alpha mode, but releasing soon!
 
