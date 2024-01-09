@@ -14,6 +14,7 @@ export const permittedFakerMethods: Array<keyof typeof faker> = [
   'internet',
   'lorem',
   'name',
+  'image',
   'phone',
   'random',
   'system',

@@ -12,7 +12,7 @@ const config = {
       },
       image:{
         type:"faker",
-        key:"internet.avatar"
+        key: "image.people"
       }
     }
   },

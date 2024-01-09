@@ -13,6 +13,7 @@ type FakerFunctionKey =
   | 'internet'
   | 'lorem'
   | 'name'
+  | 'image'
   | 'phone'
   | 'random'
   | 'system';
@@ -35,7 +36,7 @@ export type Paths<TEntity, TDepth extends number = 3, TKey extends number | stri
       }[keyof TEntity]
     : '';
 
-type AllowedFakerStrings = Exclude<Paths<Pick<FakerType, FakerFunctionKey>>, FakerFunctionKey>;
+export type AllowedFakerStrings = Exclude<Paths<Pick<FakerType, FakerFunctionKey>>, FakerFunctionKey>;
 
 export type FakerConfiguratedField =
   | {
