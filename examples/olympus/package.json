@@ -5,7 +5,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "demeter zeus.graphql"
+    "start": "node ../../node_modules/.bin/demeter zeus.graphql"
   },
   "author": "Aexol <aexol@aexol.com> (http://aexol.com)",
   "license": "ISC",

@@ -6,6 +6,9 @@
     },
     {
       "path": "./packages/graphql-demeter"
+    },
+    {
+      "path": "./examples/olympus"
     }
   ]
 }

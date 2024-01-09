@@ -47,7 +47,7 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
                 a.name,
                 () => {
                   const resolverValues = fakerConfig?.objects?.[n.name]?.[a.name];
-                  if (resolverValues?.values && resolverValues.values.length) {
+                  if (resolverValues?.type === 'values' && resolverValues.values && resolverValues.values.length) {
                     return mockValue(a.type.fieldType, () => {
                       if (!resolverValues.values?.length) throw new Error('Invalid values length 0');
                       const chosenValue = Math.floor(Math.random() * resolverValues.values.length);
@@ -59,7 +59,8 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
                   }
                   if ([ScalarTypes.ID, ScalarTypes.String].includes(tName as ScalarTypes)) {
                     return mockValue(a.type.fieldType, () => {
-                      const valueFromFaker = fakeValue(a.name);
+                      const valueFromFaker =
+                        resolverValues?.type === 'faker' ? fakeValue(resolverValues.key) : fakeValue(a.name);
                       if (typeof valueFromFaker !== 'string') {
                         return fakeScalar(tName)();
                       }

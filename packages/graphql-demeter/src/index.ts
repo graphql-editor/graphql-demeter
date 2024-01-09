@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { CLI } from '@/CLIClass.js';
@@ -15,6 +16,11 @@ demeter [path] [output_path] [options]
   .option('url', {
     alias: 'u',
     describe: 'Get schema in-memory from url',
+    type: 'string',
+  })
+  .option('config', {
+    alias: 'c',
+    describe: 'GraphQL Demeter config path',
     type: 'string',
   })
   .demandCommand(1).argv;

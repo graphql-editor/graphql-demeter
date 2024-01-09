@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "start": "tspc --build tsconfig.build.json --watch",
-    "build": "tspc --build tsconfig.build.json"
+    "start": "tspc --watch",
+    "build": "tspc"
   },
   "author": "GraphQL Editor, Artur Czemiel",
   "license": "MIT",

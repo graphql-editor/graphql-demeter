@@ -25,6 +25,38 @@ Just run the CLI on your schema.
 demeter schema.graphql
 ```
 
+Mock server should be running on port 4000
+
+## Configuration
+Demeter will automatically create config file on the first start `.graphql.demeter.js`.
+
+![](./readme.png)
+
+As you can see if you provide type it will autocomplete faker values
+
+```js
+/** @type {import('graphql-demeter-core').FakerConfig} */
+const config = {
+  objects: {
+    Card:{
+      description:{
+        type:"values",
+        values:["Very powerful card", "Most fire resistant character", "Good melee fighter"]
+      },
+      name:{
+        type:"values",
+        values:["Zeus", "Athena", "Hera", "Ares", "Kronos"]
+      },
+      image:{
+        type:"faker",
+        key:"internet.avatar"
+      }
+    }
+  },
+  scalars: {},
+};
+module.exports = config
+```
 
 ## Development & Examples
 
@@ -33,3 +65,7 @@ demeter schema.graphql
 3. Run npm run run-example
 
 You should have your server running on port 4000 with sample schema. Feel free to modify schema locally to just test it with your schema.
+
+## Roadmap
+[ ] - reload on config change
+[ ] - add ai possibilities with OpenAI Key

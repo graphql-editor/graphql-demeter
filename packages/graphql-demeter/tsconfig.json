@@ -14,7 +14,7 @@
     "strict": true,
     "outDir": "./lib",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "rootDir": "./",
+    "rootDir": "./src",
     "baseUrl": "./src",
     "typeRoots": ["../../node_modules/@types"],
     "paths": {

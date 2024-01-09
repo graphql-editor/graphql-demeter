@@ -1,3 +1,4 @@
 {
-  "extends": ["../../.eslintrc"]
+  "extends": ["../../.eslintrc"],
+  "ignorePatterns":["lib"]
 }

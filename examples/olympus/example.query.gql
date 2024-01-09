@@ -1,0 +1,8 @@
+query Draw{
+  drawCard{
+    name
+    description
+    Attack
+    Defense
+  }
+}

@@ -5,8 +5,8 @@
   "main": "./lib/index.js",
   "author": "GraphQL Editor, Artur Czemiel",
   "scripts": {
-    "build": "tspc --build tsconfig.build.json",
-    "start": "tspc --build tsconfig.build.json --watch"
+    "build": "tspc",
+    "start": "tspc --watch"
   },
   "repository": {
     "type": "git",
