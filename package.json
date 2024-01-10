@@ -41,9 +41,6 @@
     "typescript": "^5.3.3",
     "typescript-transform-paths": "^3.4.6"
   },
-  "dependencies": {
-    "graphql": "15.4.0"
-  },
   "workspaces": [
     "./packages/graphql-demeter-core",
     "./packages/graphql-demeter",
