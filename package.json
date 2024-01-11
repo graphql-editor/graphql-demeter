@@ -14,7 +14,7 @@
     "url": "https://github.com/graphql-editor/graphql-demeter.git"
   },
   "scripts": {
-    "clean-packages":"rimraf packages/**/lib && rimraf packages/**/tsconfig.tsbuildinfo",
+    "clean-packages": "rimraf packages/**/lib && rimraf packages/**/tsconfig.tsbuildinfo",
     "build": "npm run clean-packages && npm run build --ws --if-present",
     "lint": "tspc && eslint \"./packages/**/src/**/*.{ts,js}\" --quiet --fix",
     "cli": "node ./packages/graphql-demeter/lib/index.js",

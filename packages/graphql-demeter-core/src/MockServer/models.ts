@@ -40,11 +40,9 @@ export type AllowedFakerStrings = Exclude<Paths<Pick<FakerType, FakerFunctionKey
 
 export type FakerConfiguratedField =
   | {
-      type: 'values';
       values: Array<string | number>;
     }
   | {
-      type: 'faker';
       key: AllowedFakerStrings;
     };
 
