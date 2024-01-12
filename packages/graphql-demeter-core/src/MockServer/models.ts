@@ -43,7 +43,7 @@ export type FakerConfiguratedField =
       values: Array<string | number>;
     }
   | {
-      key: AllowedFakerStrings;
+      fake: AllowedFakerStrings;
     };
 
 export type FakerConfig = {

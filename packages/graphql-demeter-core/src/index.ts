@@ -61,7 +61,7 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
                   if ([ScalarTypes.ID, ScalarTypes.String].includes(tName as ScalarTypes)) {
                     return mockValue(a.type.fieldType, () => {
                       const valueFromFaker =
-                        resolverValues && 'key' in resolverValues ? fakeValue(resolverValues.key) : fakeValue(a.name);
+                        resolverValues && 'fake' in resolverValues ? fakeValue(resolverValues.fake) : fakeValue(a.name);
                       if (typeof valueFromFaker !== 'string') {
                         return fakeScalar(tName)();
                       }

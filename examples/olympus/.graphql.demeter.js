@@ -9,8 +9,16 @@ const config = {
         values:["Zeus", "Athena", "Hera", "Ares", "Kronos"]
       },
       image:{
-        key: "image.people"
+        fake: "image.people"
       }
+    },
+    S3Object:{
+      bucket:{
+        fake: "address.country"
+      },
+      region:{
+        fake: "address.country"
+      },
     }
   },
   scalars: {},

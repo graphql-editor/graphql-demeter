@@ -29,9 +29,6 @@ Mock server should be running on port 4000
 
 ## Configuration
 Demeter will automatically create config file on the first start `.graphql.demeter.js`.
-
-![](./readme.png)
-
 As you can see if you provide type it will autocomplete faker values
 
 ```js
@@ -40,16 +37,13 @@ const config = {
   objects: {
     Card:{
       description:{
-        type:"values",
         values:["Very powerful card", "Most fire resistant character", "Good melee fighter"]
       },
       name:{
-        type:"values",
         values:["Zeus", "Athena", "Hera", "Ares", "Kronos"]
       },
       image:{
-        type:"faker",
-        key:"internet.avatar"
+        fake:"internet.avatar"
       }
     }
   },

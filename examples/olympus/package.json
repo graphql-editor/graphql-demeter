@@ -1,15 +1,15 @@
 {
   "name": "olympus",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Example of using GraphQL Demeter",
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "node ../../node_modules/.bin/demeter zeus.graphql"
+    "start": "nodemon --watch .graphql.demeter.js ../../node_modules/graphql-demeter/lib/index.js zeus.graphql"
   },
   "author": "Aexol <aexol@aexol.com> (http://aexol.com)",
   "license": "ISC",
   "dependencies": {
-    "graphql-demeter": "^1.0.1"
+    "graphql-demeter": "^1.0.2"
   }
 }
