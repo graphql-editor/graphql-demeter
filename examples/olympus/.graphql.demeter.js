@@ -21,6 +21,10 @@ const config = {
       },
     }
   },
-  scalars: {},
+  scalars: {
+    JSON:{
+      values: [JSON.stringify({__metadata:"blalbalbla"}), JSON.stringify({__secret:"dsajd89u98"})]
+    }
+  },
 };
 module.exports = config

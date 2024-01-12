@@ -34,6 +34,7 @@ const mockObjectValue = (f: FieldType, required = false): unknown => {
 
 export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerConfig) => {
   const tree = Parser.parse(schemaString);
+  const scalars = tree.nodes.filter((n) => n.data.type === TypeDefinition.ScalarTypeDefinition).map((n) => n.name);
   const resolvers = Object.fromEntries(
     tree.nodes
       .filter((n) => n.data.type === TypeDefinition.ObjectTypeDefinition)
@@ -46,7 +47,10 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
               return [
                 a.name,
                 () => {
-                  const resolverValues = fakerConfig?.objects?.[n.name]?.[a.name];
+                  const isCustomScalar = scalars.find((s) => s === tName);
+                  const resolverValuesScalar = isCustomScalar && fakerConfig?.scalars?.[isCustomScalar];
+                  const resolverValues = resolverValuesScalar || fakerConfig?.objects?.[n.name]?.[a.name];
+
                   const valueField = resolverValues && 'values' in resolverValues ? resolverValues : undefined;
                   if (valueField?.values.length) {
                     return mockValue(a.type.fieldType, () => {
@@ -68,6 +72,7 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
                       return valueFromFaker;
                     });
                   }
+
                   return mockObjectValue(a.type.fieldType);
                 },
               ];
