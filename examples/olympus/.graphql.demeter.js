@@ -19,6 +19,11 @@ const config = {
       region:{
         fake: "address.country"
       },
+    },
+    SpecialCard:{
+      effect:{
+        fake:"image.animals"
+      }
     }
   },
   scalars: {

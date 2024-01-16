@@ -1,4 +1,5 @@
 import { FieldType, Options, Parser, ScalarTypes, TypeDefinition, getTypeName } from 'graphql-js-tree';
+import { _getAllConnectedInterfaces } from 'graphql-js-tree/lib/TreeOperations/interface';
 import { fakeValue } from '@/MockServer/render';
 import { FakerConfig } from '@/MockServer/models';
 export { FakerConfig } from '@/MockServer/models';
@@ -81,7 +82,52 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
         ];
       }),
   );
-  return resolvers;
+  const interfaceResolvers = Object.fromEntries(
+    tree.nodes
+      .filter((n) => n.data.type === TypeDefinition.InterfaceTypeDefinition)
+      .map((n) => {
+        const implementingInterfaces = _getAllConnectedInterfaces(tree.nodes, [n.name]);
+        const possibleTypes = tree.nodes.filter(
+          (tn) => !!tn.interfaces.find((tni) => implementingInterfaces.includes(tni)),
+        );
+        return [
+          n.name,
+          {
+            __resolveType: () => {
+              if (possibleTypes.length) {
+                const chosenTypeRandomly = possibleTypes[Math.floor(Math.random() * possibleTypes.length)];
+                return chosenTypeRandomly.name;
+              }
+              return null;
+            },
+          },
+        ];
+      }),
+  );
+  const unionResolvers = Object.fromEntries(
+    tree.nodes
+      .filter((n) => n.data.type === TypeDefinition.UnionTypeDefinition)
+      .map((n) => {
+        const possibleTypes = n.args.map((a) => a.name);
+        return [
+          n.name,
+          {
+            __resolveType: () => {
+              if (possibleTypes.length) {
+                const chosenTypeRandomly = possibleTypes[Math.floor(Math.random() * possibleTypes.length)];
+                return chosenTypeRandomly;
+              }
+              return null;
+            },
+          },
+        ];
+      }),
+  );
+  return {
+    ...resolvers,
+    ...interfaceResolvers,
+    ...unionResolvers,
+  };
 };
 
 const fakeScalar = (typeName: string) => () => {
