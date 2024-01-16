@@ -1,176 +1,175 @@
-type Beer implements Product{
-	name: String!
-	SKU: String!
-	price: Int!
-	kind: BeerKind
+"""Aws S3 File"""
+type S3Object {
+  """"""
+  bucket: String!
+
+  """"""
+  key: String!
+
+  """"""
+  region: String!
 }
 
-type ClientQuery{
-	menu: [Product!]!
+""""""
+union ChangeCard = SpecialCard | EffectCard
+
+""""""
+enum SpecialSkills {
+  """Lower enemy defense -5<br>"""
+  THUNDER
+
+  """Attack multiple Cards at once<br>"""
+  RAIN
+
+  """50% chance to avoid any attack<br>"""
+  FIRE
 }
 
-type Query{
-	clientQuery: ClientQuery!
-	pubQuery: PubQuery!
-	restProxy: Anything
-	getFile(
-		fileKey: String!
-	): String
+"""Card used in card game<br>"""
+type Card implements Nameable {
+  """The attack power<br>"""
+  Attack: Int!
+
+  """<div>How many children the greek god had</div>"""
+  Children: Int
+
+  """The defense power<br>"""
+  Defense: Int!
+
+  """Attack other cards on the table , returns Cards after attack<br>"""
+  attack(
+    """Attacked card/card ids<br>"""
+    cardID: [String!]!
+  ): [Card!]
+
+  """Put your description here"""
+  cardImage: S3Object
+
+  """Description of a card<br>"""
+  description: String!
+
+  """"""
+  id: ID!
+
+  """"""
+  image: String!
+
+  """"""
+  info: JSON!
+
+  """The name of a card<br>"""
+  name: String!
+
+  """"""
+  skills: [SpecialSkills!]
 }
 
-scalar Anything
-
-input ProxyInput{
-	val: String!
+""""""
+interface Nameable {
+  """"""
+  name: String!
 }
 
-type Order{
-	number: Int!
-	createdAt: String!
-	orderedBeers: [OrderedBeer!]!
+""""""
+scalar JSON
+
+""""""
+type Powerup {
+  """"""
+  name: String
 }
 
-type OrderedBeer{
-	quantity: Int!
-	beer: Beer!
+""""""
+type Mutation {
+  """add Card to Cards database<br>"""
+  addCard(card: createCard!): Card!
 }
 
-type PubQuery{
-	orders: [Order!]!
+"""Stack of cards"""
+type CardStack implements Nameable {
+  """"""
+  cards: [Card!]
+
+  """"""
+  name: String!
 }
 
-type PubMutation{
-	submitOrder(
-		order: SubmitOrder!
-	): Boolean
-	addBeer(
-		beer: AddBeer!
-	): Boolean
-	editBeer(
-		editBeer: EditBeer!
-		sku: SKUInput!
-	): Boolean
-	removeBeer(
-		sku: SKUInput!
-	): Boolean
-	cancelOrder(
-		orderDetail: OrderDetail!
-	): Boolean
-	uploadFile(
-		fileInput: FileInput!
-	): FileUploadResponse!
-	addSnack(
-		snack: AddSnack!
-	): Boolean
-	editSnack(
-		sku: SKUInput!
-		snack: EditSnack!
-	): Boolean
-	deleteSnack: Boolean
+""""""
+type Public {
+  """"""
+  powerups(filter: String!): [Powerup!]
 }
 
-input FileInput{
-	filename: String!
-	contentType: String!
+""""""
+type Query {
+  """"""
+  cardById(cardId: String): Card
+
+  """Draw a card<br>"""
+  drawCard: Card!
+
+  """"""
+  drawChangeCard: ChangeCard!
+
+  """list All Cards availble<br>"""
+  listCards: [Card!]!
+
+  """"""
+  myStacks: [CardStack!]
+
+  """"""
+  nameables: [Nameable!]!
+
+  """"""
+  public: Public
 }
 
-type FileUploadResponse{
-	putUrl: String!
-	fileKey: String!
+""""""
+type Subscription {
+  """"""
+  deck: [Card!]
 }
 
-input AddBeer{
-	name: String!
-	SKU: String!
-	price: Int!
-	kind: BeerKind
+""""""
+type SpecialCard implements Nameable {
+  """"""
+  effect: String!
+
+  """"""
+  name: String!
 }
 
-input EditBeer{
-	name: String
-	price: Int
-	kind: BeerKind
+""""""
+type EffectCard implements Nameable {
+  """"""
+  effectSize: Float!
+
+  """"""
+  name: String!
 }
 
-input SKUInput{
-	SKU: String!
-}
+"""create card inputs<br>"""
+input createCard {
+  """The name of a card<br>"""
+  name: String!
 
-input SubmitOrder{
-	productInOrder: [ProductInOrder!]! = []
-}
+  """Description of a card<br>"""
+  description: String!
 
-input ProductInOrder{
-	SKU: String!
-	quantity: Int!
-}
+  """<div>How many children the greek god had</div>"""
+  Children: Int
 
-input OrderDetail{
-	number: Int!
-}
+  """The attack power<br>"""
+  Attack: Int!
 
-type Mutation{
-	pubMutation: PubMutation
-	"""
-	user
-	"""
-	register(
-		user: RegisterInput!
-	): RegisterResponse!
-}
+  """The defense power<br>"""
+  Defense: Int!
 
-type RegisterResponse{
-	registered: Boolean
-	hasError: RegisterErrors
+  """input skills"""
+  skills: [SpecialSkills!]
 }
-
-input RegisterInput{
-	username: String!
-	password: String!
-	invitationToken: String
-}
-
-enum RegisterErrors{
-	USERNAME_EXISTS
-	PASSWORD_WEAK
-	INVITE_DOMAIN_INCORRECT
-	LINK_EXPIRED
-	USERNAME_INVALID
-}
-
 schema{
-	query: Query
-	mutation: Mutation
-}
-
-enum BeerKind{
-	IPA
-	APA
-	Lager
-	Sour
-	Ale
-}
-
-interface Product{
-	SKU: String!
-	name: String!
-	price: Int!
-}
-
-type Snack implements Product{
-	SKU: String!
-	name: String!
-	price: Int!
-}
-
-input AddSnack{
-	SKU: String!
-	name: String!
-	price: Int!
-}
-
-input EditSnack{
-	SKU: String
-	name: String
-	price: Int
+	query: Query,
+	mutation: Mutation,
+	subscription: Subscription
 }
