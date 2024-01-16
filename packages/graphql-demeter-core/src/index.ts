@@ -36,6 +36,7 @@ const mockObjectValue = (f: FieldType, required = false): unknown => {
 export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerConfig) => {
   const tree = Parser.parse(schemaString);
   const scalars = tree.nodes.filter((n) => n.data.type === TypeDefinition.ScalarTypeDefinition).map((n) => n.name);
+  const enums = tree.nodes.filter((n) => n.data.type === TypeDefinition.EnumTypeDefinition).map((n) => n.name);
   const resolvers = Object.fromEntries(
     tree.nodes
       .filter((n) => n.data.type === TypeDefinition.ObjectTypeDefinition)
@@ -48,6 +49,18 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
               return [
                 a.name,
                 () => {
+                  const isEnum = enums.find((s) => s === tName);
+                  if (isEnum) {
+                    return mockValue(a.type.fieldType, () => {
+                      const e = tree.nodes.find((tn) => tn.name === tName);
+                      if (!e) {
+                        console.warn(`Can't find enum "${tName} in schema returning brokenEnum"`);
+                        return 'brokenEnum';
+                      }
+                      const possibleEnumValues = e.args.map((a) => a.name);
+                      return possibleEnumValues[Math.floor(Math.random() * possibleEnumValues.length)];
+                    });
+                  }
                   const isCustomScalar = scalars.find((s) => s === tName);
                   const resolverValuesScalar = isCustomScalar && fakerConfig?.scalars?.[isCustomScalar];
                   const resolverValues = resolverValuesScalar || fakerConfig?.objects?.[n.name]?.[a.name];
