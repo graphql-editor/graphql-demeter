@@ -1,0 +1,25 @@
+query piwo {
+  clientQuery {
+    event_schedule {
+      __typename
+      date
+      ... on Beer {
+        price
+        sku
+      }
+      ... on Snack {
+        sku
+        date
+      }
+      name
+      ... on Concerts {
+        name
+        date
+      }
+      ... on Stand_ups {
+        date
+        quanitity
+      }
+    }
+  }
+}

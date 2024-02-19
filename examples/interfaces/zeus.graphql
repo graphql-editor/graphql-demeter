@@ -1,0 +1,186 @@
+input AddBeer{
+	kind: BeerKind
+	name: String!
+	price: Int!
+	SKU: String!
+}
+
+scalar Anything
+
+type Beer implements Product & Event_schedule{
+	kind: BeerKind
+	name: String!
+	price: Int!
+	sku: String!
+	date: String
+	reviews: String
+}
+
+enum BeerKind{
+	Ale
+	APA
+	IPA
+	Lager
+	Sour
+}
+
+type ClientQuery{
+	beers: [Beer!]!
+	products: [Product!]!
+	productUnions: [ProductUnion!]!
+	event_schedule: Event_schedule
+}
+
+input EditBeer{
+	kind: BeerKind
+	name: String
+	price: Int
+}
+
+input FileInput{
+	contentType: String!
+	filename: String!
+}
+
+"""
+asddasdads
+"""
+type FileUploadResponse{
+	fileKey: String!
+	putUrl: String!
+}
+
+type Order{
+	createdAt: String!
+	number: Int!
+	orderedBeers: [OrderedBeer!]!
+}
+
+input OrderDetail{
+	number: Int!
+}
+
+type OrderedBeer{
+	beer: Beer!
+	quantity: Int!
+}
+
+"""
+afasfasfasfasfasf
+"""
+interface Product implements Event_schedule{
+	name: String!
+	sku: String!
+	date: String
+}
+
+input ProductInOrder{
+	quantity: Int!
+	SKU: String!
+}
+
+input ProxyInput{
+	val: String!
+}
+
+type PubMutation{
+	addBeer(
+		beer: AddBeer!
+	): Boolean
+	cancelOrder(
+		orderDetail: OrderDetail!
+	): Boolean
+	editBeer(
+		editBeer: EditBeer!
+		SKUInput: SKUInput!
+	): Boolean
+	removeBeer(
+		SKUInput: SKUInput!
+	): Boolean
+	submitOrder(
+		order: SubmitOrder!
+	): Boolean
+	uploadFile(
+		fileInput: FileInput!
+	): FileUploadResponse!
+}
+
+"""
+aasdasdasd
+"""
+type PubQuery{
+	orders: [Order!]!
+}
+
+input SKUInput{
+	SKU: String!
+}
+
+input SubmitOrder{
+	productInOrder: [ProductInOrder!]! = []
+}
+
+type Snack implements Product & Event_schedule{
+	name: String!
+	sku: String!
+	date: String
+}
+
+union ProductUnion = Beer | Snack | Concerts | Stand_ups
+
+interface Event_schedule{
+	name: String
+	date: String
+}
+
+type Concerts implements Event_schedule{
+	name: String
+	date: String
+	price: Int
+}
+
+type Stand_ups implements Event_schedule{
+	name: String
+	date: String
+	price: Int
+}
+
+schema{
+	query: Query
+	mutation: Mutation
+}
+
+extend input PersonInput{
+	float: Float
+}
+
+extend type Stand_ups{
+	quanitity: Int
+}
+
+input PersonInput{
+	name: String!
+	surname: String!
+	Agadse: Int
+}
+
+type Dupa{
+	dupa: String
+	yellow: String
+	number: Int
+}
+
+type Mutation{
+	pubMutation: PubMutation
+	product: Product
+	event: Event_schedule
+}
+
+type Query{
+	clientQuery: ClientQuery!
+	getFile(
+		fileKey: String!
+	): String
+	pubQuery: PubQuery!
+	restProxy: Anything
+}

@@ -19,7 +19,9 @@
     "lint": "tspc && eslint \"./packages/**/src/**/*.{ts,js}\" --quiet --fix",
     "dev": "npm run build && concurrently \"npm run start -w graphql-demeter-core\"  \"npm run start -w graphql-demeter\" \"npm run start -w olympus\" ",
     "example": "npm run start -w olympus",
+    "interfaces": "npm run start -w interfaces",
     "run-example": "npm run build && npm run example",
+    "run-interfaces": "npm run build && npm run interfaces",
     "test": "jest"
   },
   "devDependencies": {
@@ -46,6 +48,7 @@
   "workspaces": [
     "./packages/graphql-demeter-core",
     "./packages/graphql-demeter",
-    "./examples/olympus"
+    "./examples/olympus",
+    "./examples/interfaces"
   ]
 }

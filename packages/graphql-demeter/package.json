@@ -1,6 +1,6 @@
 {
   "name": "graphql-demeter",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": false,
   "scripts": {
     "start": "tspc --watch",
@@ -26,7 +26,7 @@
   "dependencies": {
     "cross-fetch": "^3.0.4",
     "graphql": "15.4.0",
-    "graphql-demeter-core": "^1.0.5",
+    "graphql-demeter-core": "^1.0.6",
     "graphql-yoga": "^5.1.1",
     "yargs": "^16.1.1"
   },

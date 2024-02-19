@@ -1,5 +1,4 @@
 import { FieldType, Options, Parser, ScalarTypes, TypeDefinition, getTypeName } from 'graphql-js-tree';
-import { _getAllConnectedInterfaces } from 'graphql-js-tree/lib/TreeOperations/interface';
 import { fakeValue } from '@/MockServer/render';
 import { FakerConfig } from '@/MockServer/models';
 export { FakerConfig } from '@/MockServer/models';
@@ -81,7 +80,11 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
                       const valueFromFaker =
                         resolverValues && 'fake' in resolverValues ? fakeValue(resolverValues.fake) : fakeValue(a.name);
                       if (typeof valueFromFaker !== 'string') {
-                        return fakeScalar(tName)();
+                        const faked = fakeScalar(tName)();
+                        if (faked === 'dupa') {
+                          return fakeScalar('lorem.word')();
+                        }
+                        return faked;
                       }
                       return valueFromFaker;
                     });
@@ -99,10 +102,9 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
     tree.nodes
       .filter((n) => n.data.type === TypeDefinition.InterfaceTypeDefinition)
       .map((n) => {
-        const implementingInterfaces = _getAllConnectedInterfaces(tree.nodes, [n.name]);
-        const possibleTypes = tree.nodes.filter(
-          (tn) => !!tn.interfaces.find((tni) => implementingInterfaces.includes(tni)),
-        );
+        const possibleTypes = tree.nodes
+          .filter((n) => n.data.type === TypeDefinition.ObjectTypeDefinition)
+          .filter((tn) => !!tn.interfaces.find((tni) => tni === n.name));
         return [
           n.name,
           {
