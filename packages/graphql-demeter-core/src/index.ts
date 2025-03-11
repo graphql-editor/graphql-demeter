@@ -1,6 +1,7 @@
 import { FieldType, Options, Parser, ScalarTypes, TypeDefinition, getTypeName } from 'graphql-js-tree';
 import { fakeValue } from '@/MockServer/render';
 import { FakerConfig } from '@/MockServer/models';
+import { faker } from '@faker-js/faker';
 export { FakerConfig } from '@/MockServer/models';
 
 const maxArray = 16;
@@ -82,7 +83,7 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
                       if (typeof valueFromFaker !== 'string') {
                         const faked = fakeScalar(tName)();
                         if (faked === 'dupa') {
-                          return fakeScalar('lorem.word')();
+                          return faker.lorem.word();
                         }
                         return faked;
                       }
