@@ -30,6 +30,7 @@ export class CLI {
         `const config = {
   objects: {},
   scalars: {},
+  alwaysRequired: false
 };
 module.exports = config`,
       );

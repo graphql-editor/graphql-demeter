@@ -37,6 +37,7 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
   const tree = Parser.parse(schemaString);
   const scalars = tree.nodes.filter((n) => n.data.type === TypeDefinition.ScalarTypeDefinition).map((n) => n.name);
   const enums = tree.nodes.filter((n) => n.data.type === TypeDefinition.EnumTypeDefinition).map((n) => n.name);
+  const alwaysRequired = fakerConfig ? fakerConfig.alwaysRequired : false;
   const resolvers = Object.fromEntries(
     tree.nodes
       .filter((n) => n.data.type === TypeDefinition.ObjectTypeDefinition)
@@ -74,24 +75,30 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
                     });
                   }
                   if ([ScalarTypes.Boolean, ScalarTypes.Float, ScalarTypes.Int].includes(tName as ScalarTypes)) {
-                    return mockValue(a.type.fieldType, fakeScalar(tName));
+                    return mockValue(a.type.fieldType, fakeScalar(tName), alwaysRequired);
                   }
                   if ([ScalarTypes.ID, ScalarTypes.String].includes(tName as ScalarTypes)) {
-                    return mockValue(a.type.fieldType, () => {
-                      const valueFromFaker =
-                        resolverValues && 'fake' in resolverValues ? fakeValue(resolverValues.fake) : fakeValue(a.name);
-                      if (typeof valueFromFaker !== 'string') {
-                        const faked = fakeScalar(tName)();
-                        if (faked === 'dupa') {
-                          return faker.lorem.word();
+                    return mockValue(
+                      a.type.fieldType,
+                      () => {
+                        const valueFromFaker =
+                          resolverValues && 'fake' in resolverValues
+                            ? fakeValue(resolverValues.fake)
+                            : fakeValue(a.name);
+                        if (typeof valueFromFaker !== 'string') {
+                          const faked = fakeScalar(tName)();
+                          if (faked === 'dupa') {
+                            return faker.lorem.word();
+                          }
+                          return faked;
                         }
-                        return faked;
-                      }
-                      return valueFromFaker;
-                    });
+                        return valueFromFaker;
+                      },
+                      alwaysRequired,
+                    );
                   }
 
-                  return mockObjectValue(a.type.fieldType);
+                  return mockObjectValue(a.type.fieldType, alwaysRequired);
                 },
               ];
             }),

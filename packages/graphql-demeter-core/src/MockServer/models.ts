@@ -49,4 +49,5 @@ export type FakerConfiguratedField =
 export type FakerConfig = {
   objects: Record<string, Record<string, FakerConfiguratedField>> | undefined;
   scalars: Record<string, FakerConfiguratedField> | undefined;
+  alwaysRequired: boolean;
 };
