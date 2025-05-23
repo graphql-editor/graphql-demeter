@@ -37,7 +37,7 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
   const tree = Parser.parse(schemaString);
   const scalars = tree.nodes.filter((n) => n.data.type === TypeDefinition.ScalarTypeDefinition).map((n) => n.name);
   const enums = tree.nodes.filter((n) => n.data.type === TypeDefinition.EnumTypeDefinition).map((n) => n.name);
-  const alwaysRequired = fakerConfig ? fakerConfig.alwaysRequired : false;
+  const alwaysRequired = fakerConfig?.alwaysRequired || false;
   const resolvers = Object.fromEntries(
     tree.nodes
       .filter((n) => n.data.type === TypeDefinition.ObjectTypeDefinition)
