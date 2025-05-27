@@ -1,6 +1,6 @@
 {
   "name": "olympus",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "Example of using GraphQL Demeter",
   "private": true,
   "main": "index.js",
@@ -10,6 +10,6 @@
   "author": "Aexol <aexol@aexol.com> (http://aexol.com)",
   "license": "ISC",
   "dependencies": {
-    "graphql-demeter": "^1.0.7"
+    "graphql-demeter": "^1.0.8"
   }
 }
