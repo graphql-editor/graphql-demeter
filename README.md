@@ -48,9 +48,11 @@ const config = {
     }
   },
   scalars: {},
+  alwaysRequired: false,
 };
 module.exports = config
 ```
+If the `alwaysRequired` field is `true`, it will always give mock values regardless of the required `!` mark in the schema.
 
 ## Development & Examples
 
