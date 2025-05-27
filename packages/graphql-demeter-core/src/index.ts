@@ -17,7 +17,7 @@ const mockValue = (f: FieldType, fakeScalarFn: ReturnType<typeof fakeScalar>, re
     return mockValue(f.nest, fakeScalarFn, true);
   }
   const arrayNumber = Math.floor(Math.random() * maxArray);
-  return new Array(arrayNumber).fill(0).map(() => mockValue(f.nest, fakeScalarFn));
+  return new Array(arrayNumber).fill(0).map(() => mockValue(f.nest, fakeScalarFn, required));
 };
 const mockObjectValue = (f: FieldType, required = false): unknown => {
   if (f.type === Options.name) {
@@ -30,7 +30,7 @@ const mockObjectValue = (f: FieldType, required = false): unknown => {
     return mockObjectValue(f.nest, true);
   }
   const arrayNumber = Math.floor(Math.random() * maxArray);
-  return new Array(arrayNumber).fill(0).map(() => mockObjectValue(f.nest));
+  return new Array(arrayNumber).fill(0).map(() => mockObjectValue(f.nest, required));
 };
 
 export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerConfig) => {
@@ -52,15 +52,19 @@ export const createFakeResolvers = (schemaString: string, fakerConfig?: FakerCon
                 () => {
                   const isEnum = enums.find((s) => s === tName);
                   if (isEnum) {
-                    return mockValue(a.type.fieldType, () => {
-                      const e = tree.nodes.find((tn) => tn.name === tName);
-                      if (!e) {
-                        console.warn(`Can't find enum "${tName} in schema returning brokenEnum"`);
-                        return 'brokenEnum';
-                      }
-                      const possibleEnumValues = e.args.map((a) => a.name);
-                      return possibleEnumValues[Math.floor(Math.random() * possibleEnumValues.length)];
-                    });
+                    return mockValue(
+                      a.type.fieldType,
+                      () => {
+                        const e = tree.nodes.find((tn) => tn.name === tName);
+                        if (!e) {
+                          console.warn(`Can't find enum "${tName} in schema returning brokenEnum"`);
+                          return 'brokenEnum';
+                        }
+                        const possibleEnumValues = e.args.map((a) => a.name);
+                        return possibleEnumValues[Math.floor(Math.random() * possibleEnumValues.length)];
+                      },
+                      alwaysRequired,
+                    );
                   }
                   const isCustomScalar = scalars.find((s) => s === tName);
                   const resolverValuesScalar = isCustomScalar && fakerConfig?.scalars?.[isCustomScalar];
